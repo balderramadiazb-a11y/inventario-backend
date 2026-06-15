@@ -35,6 +35,21 @@ app.post('/productos', async (req, res) => {
     res.json({ mensaje: "Producto registrado", nuevoProducto });
 });
 
+app.put('/productos/:id', async (req, res) => {
+    const productoActualizado = await Producto.findByIdAndUpdate(
+        req.params.id,
+        req.body,
+        { new: true }
+    );
+
+    res.json({ mensaje: "Producto actualizado", productoActualizado });
+});
+
+app.delete('/productos/:id', async (req, res) => {
+    await Producto.findByIdAndDelete(req.params.id);
+    res.json({ mensaje: "Producto eliminado" });
+});
+
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
